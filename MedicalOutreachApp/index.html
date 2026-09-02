@@ -490,10 +490,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 .team-section{ background: var(--navy); }
 .team-grid{
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 1.5rem;
 }
-@media (min-width: 700px){ .team-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 700px){ .team-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px){ .team-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .team-card{
   position: relative;
   background: var(--navy-card);
@@ -508,22 +509,24 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
   box-shadow: 0 24px 50px -24px var(--teal-glow);
 }
 .avatar{
-  width: 68px; height: 68px;
+  width: 88px; height: 88px;
   border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-weight: 700; font-size: 1.2rem;
-  color: var(--white);
-  background: conic-gradient(from 180deg, var(--teal), var(--light-blue), var(--teal));
+  display: grid;
+  place-items: center;
+  background-image: var(--avatar-image), conic-gradient(from 180deg, var(--teal), var(--light-blue), var(--teal));
+  background-size: cover, cover;
+  background-position: center;
   margin-bottom: 1.4rem;
   position: relative;
+  overflow: hidden;
 }
-.avatar::after{
-  content: '';
-  position: absolute; inset: 3px;
-  border-radius: 50%;
-  background: var(--navy-card);
+.avatar span{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--white);
+  text-shadow: 0 0 8px rgba(0,0,0,0.5);
 }
-.avatar span{ position: relative; z-index: 1; }
 .team-card h3{ font-size: 1.15rem; color: var(--white); }
 .team-role{
   font-family: var(--font-mono);
@@ -792,22 +795,33 @@ footer .foot-tag{ font-family: var(--font-mono); font-size: 0.7rem; letter-spaci
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow">Our Team</p>
-        <h2>Meet the developers</h2>
-        <p>Two students who turned a shared concern for school safety into a statewide outreach program.</p>
+        <h2>Leadership and Staff</h2>
       </div>
 
       <div class="team-grid">
         <div class="team-card reveal">
-          <div class="avatar"><span>DN</span></div>
-          <h3>Developer Name</h3>
-          <p class="team-role">Co-Founder &amp; Outreach Lead</p>
+          <div class="avatar" style="--avatar-image: url('images/team-suhani.jpg');"><span>SD</span></div>
+          <h3>Suhani Dureja</h3>
+          <p class="team-role">Founder and Community Coordinator</p>
           <p class="bio">Passionate about community health and bringing medical education to underrepresented schools.</p>
         </div>
         <div class="team-card reveal" style="--reveal-delay:0.15s">
-          <div class="avatar"><span>DN</span></div>
-          <h3>Developer Name</h3>
-          <p class="team-role">Co-Founder &amp; Program Director</p>
+          <div class="avatar" style="--avatar-image: url('images/team-madeline.jpg');"><span>MS</span></div>
+          <h3>Madeline Smith</h3>
+          <p class="team-role">Software Engineer and Digital Lead</p>
           <p class="bio">Dedicated to curriculum development and ensuring students have the confidence to act in emergencies.</p>
+        </div>
+        <div class="team-card reveal" style="--reveal-delay:0.25s">
+          <div class="avatar" style="--avatar-image: url('images/team-malia.jpg');"><span>MM</span></div>
+          <h3>Malia Mitchell</h3>
+          <p class="team-role">UX Designer</p>
+          <p class="bio">Shapes the digital experience so staff and students can access tools easily and confidently.</p>
+        </div>
+        <div class="team-card reveal" style="--reveal-delay:0.35s">
+          <div class="avatar" style="--avatar-image: url('images/team-brennan.jpg');"><span>BF</span></div>
+          <h3>Brennan Faires</h3>
+          <p class="team-role">Software Engineer</p>
+          <p class="bio">Builds the backend systems that keep outreach scheduling and volunteer coordination running smoothly.</p>
         </div>
       </div>
     </div>
@@ -822,26 +836,29 @@ footer .foot-tag{ font-family: var(--font-mono); font-size: 0.7rem; letter-spaci
           <p class="eyebrow">Get In Touch</p>
           <h2>Bring the program to your school</h2>
           <p>Want to bring our program to your school or help support our medical drives? Reach out — we'll follow up directly.</p>
-          <a class="contact-email" href="mailto:contact@youthmedicaloutreach.org">
+          <a href="mailto:madelinesmith1506@gmail.com" class="contact-email">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6.5L12 13L21 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/></svg>
-            contact@youthmedicaloutreach.org
+            msmith@gmail.com
           </a>
         </div>
 
-        <form class="contact-form reveal" id="contactForm" style="--reveal-delay:0.1s">
+        <form class="contact-form reveal" id="contactForm" style="--reveal-delay:0.1s" action="https://formsubmit.co/83d32876b7522506a1ace9efdae777c2" method="POST">
+          <input type="hidden" name="_subject" value="New Medical Outreach contact form submission">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
           <div class="field">
-            <input type="text" id="name" placeholder=" " required>
+            <input type="text" id="name" name="name" placeholder=" " required>
             <label for="name">Your Name</label>
           </div>
           <div class="field">
-            <input type="email" id="email" placeholder=" " required>
+            <input type="email" id="email" name="email" placeholder=" " required>
             <label for="email">Your Email</label>
           </div>
           <div class="field">
-            <textarea id="message" placeholder=" " required></textarea>
+            <textarea id="message" name="message" placeholder=" " required></textarea>
             <label for="message">Your Message</label>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Send Message</button>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" id="formSubmitBtn">Send Message</button>
           <p class="form-status" id="formStatus" aria-live="polite"></p>
         </form>
       </div>
@@ -983,18 +1000,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---- Contact form (mailto handoff) ---- */
+  /* ---- Contact form: submits in the background via FormSubmit's AJAX endpoint ---- */
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
-  form.addEventListener('submit', (e) => {
+  const submitBtn = document.getElementById('formSubmitBtn');
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const subject = encodeURIComponent(`Message from ${name} via Youth Medical Outreach site`);
-    const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    status.textContent = 'Opening your email app to send this to contact@youthmedicaloutreach.org…';
-    window.location.href = `mailto:contact@youthmedicaloutreach.org?subject=${subject}&body=${body}`;
+
+    const nameEl = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const messageEl = document.getElementById('message');
+    const name = nameEl.value.trim();
+    const email = emailEl.value.trim();
+    const message = messageEl.value.trim();
+
+    submitBtn.disabled = true;
+    status.style.color = '';
+    status.textContent = 'Sending…';
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/madelinesmith1506@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          message: message,
+          _subject: `Medical Outreach contact from ${name}`
+        })
+      });
+
+      if (!response.ok) throw new Error('Request failed');
+
+      status.textContent = "Thanks — your message has been sent. We'll be in touch soon!";
+      form.reset();
+    } catch (err) {
+      status.style.color = '#ff9d9d';
+      status.textContent = "Something went wrong sending that. Please try again, or email msmith@gmail.com directly.";
+    } finally {
+      submitBtn.disabled = false;
+    }
   });
 });
 </script>
